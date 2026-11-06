@@ -1,7 +1,16 @@
 import type { SiteConfig } from '../types';
 
+// Fotos: coloque os arquivos em src/assets/images/ com estes nomes e o site usa automaticamente.
+// retrato.jpg -> foto redonda no topo da home | palco.jpg -> foto grande (horizontal) na abertura da home
+const photos = import.meta.glob<{ default: ImageMetadata }>('../assets/images/*.{jpg,jpeg,png,webp}', { eager: true });
+const photo = (name: string) =>
+    Object.entries(photos).find(([path]) => path.split('/').pop()?.replace(/\.(jpe?g|png|webp)$/, '') === name)?.[1].default;
+const retrato = photo('retrato');
+const palco = photo('palco');
+
 const siteConfig: SiteConfig = {
     website: 'https://brunostefani.com',
+    avatar: retrato ? { src: retrato, alt: 'Bruno Stefani' } : undefined,
     title: 'Bruno Stefani',
     subtitle: 'IA, inovação e novos negócios para empresas tradicionais',
     description:
@@ -29,12 +38,21 @@ const siteConfig: SiteConfig = {
     ],
     hero: {
         title: 'Do piloto ao P&L.',
-        text: 'Eu ajudo empresas tradicionais a transformar **IA e inovação em modelo de negócio e resultado**. Não em piloto e palco.\n\nFui Diretor Global de Inovação da Ambev. Hoje sou professor na Fundação Dom Cabral, no Insper e na FGV, conselheiro de empresas e colunista da MIT Sloan Management Review Brasil. Faço doutorado com Silvio Meira sobre orquestração de ecossistemas de negócios.',
+        text: 'Eu ajudo empresas tradicionais a transformar **IA e inovação em modelo de negócio e resultado**. Não em piloto e palco.\n\nFui Diretor Global de Inovação da Ambev. Hoje sou professor na Fundação Dom Cabral, no Insper e na FGV, conselheiro de empresas e colunista da HSM Management, do NotJournal e da CKGSB Knowledge. Faço doutorado com Silvio Meira sobre orquestração de ecossistemas de negócios.',
+        image: palco ? { src: palco, alt: 'Bruno Stefani em palestra' } : undefined,
         actions: [
             { text: 'Contratar palestra', href: '/contato' },
             { text: 'Ler as ideias', href: '/ideias' }
         ]
     },
+    columns: [
+        { text: 'HSM Management', href: 'https://hsmmanagement.com.br/colunista/bruno-stefani/' },
+        { text: 'NotJournal', href: 'https://notjournal.com.br/colunista/bruno-stefani' },
+        {
+            text: 'CKGSB Knowledge',
+            href: 'https://ckgsbknowledge.com.br/a-china-entra-na-cupula-com-trump-sem-precisar-fazer-acordo-e-isso-muda-tudo-para-o-brasil/'
+        }
+    ],
     clients: ['Petrobras', 'ArcelorMittal', 'BASF', 'Bayer', 'Unilever'],
     services: [
         {

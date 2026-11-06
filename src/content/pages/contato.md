@@ -7,7 +7,7 @@ seo:
 
 Para palestras, workshops, conselho e programas in company, escreva com a data, a cidade, o público e o tema do evento.
 
-**E-mail:** [E-MAIL DE CONTATO]
+**E-mail:** [brunostefani@me.com](mailto:brunostefani@me.com)
 
 ## Agências de palestras
 

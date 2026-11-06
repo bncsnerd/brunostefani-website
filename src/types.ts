@@ -41,6 +41,7 @@ export type SiteConfig = {
     footerNavLinks?: Link[];
     socialLinks?: Link[];
     hero?: Hero;
+    columns?: Link[];
     clients?: string[];
     services?: { title: string; text: string; href: string }[];
     subscribe?: Subscribe;

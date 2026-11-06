@@ -18,6 +18,7 @@ const featuredProjects = projects.filter(({ data }) => data.isFeatured);
 
 const services = siteConfig.services ?? [];
 const clients = siteConfig.clients ?? [];
+const columns = siteConfig.columns ?? [];
 ---
 
 <BaseLayout description={siteConfig.description}>
@@ -58,6 +59,26 @@ const clients = siteConfig.clients ?? [];
             <div class="mt-12 sm:mt-16">
                 <Button href="/palestras">Ver todas as palestras</Button>
             </div>
+        </section>
+    )}
+
+    {columns.length > 0 && (
+        <section class="mb-16 sm:mb-24" aria-labelledby="colunas">
+            <h2 id="colunas" class="mb-6 font-serif text-xl italic sm:mb-8 sm:text-2xl">Colunas</h2>
+            <ul class="flex flex-wrap gap-x-8 gap-y-3">
+                {columns.map((column) => (
+                    <li>
+                        <a
+                            class="font-serif text-xl underline decoration-dashed decoration-1 underline-offset-4 hover:decoration-solid sm:text-2xl"
+                            href={column.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {column.text}
+                        </a>
+                    </li>
+                ))}
+            </ul>
         </section>
     )}
 
