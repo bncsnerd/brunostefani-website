@@ -25,6 +25,7 @@ const blog = defineCollection({
             publishDate: z.coerce.date(),
             updatedDate: z.coerce.date().optional(),
             isFeatured: z.boolean().default(false),
+            draft: z.boolean().default(false),
             tags: z.array(z.string()).default([]),
             seo: seoSchema(image).optional()
         })
@@ -48,8 +49,52 @@ const projects = defineCollection({
             publishDate: z.coerce.date(),
             order: z.number().optional(),
             isFeatured: z.boolean().default(false),
+            draft: z.boolean().default(false),
             seo: seoSchema(image).optional()
         })
 });
 
-export const collections = { blog, pages, projects };
+// Projetos (cases) em detalhe: /projetos
+const cases = defineCollection({
+    loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/cases' }),
+    schema: ({ image }) =>
+        z.object({
+            title: z.string(),
+            client: z.string(),
+            sector: z.string().optional(),
+            period: z.string(),
+            summary: z.string(),
+            order: z.number().optional(),
+            isFeatured: z.boolean().default(false),
+            draft: z.boolean().default(false),
+            seo: seoSchema(image).optional()
+        })
+});
+
+// Podcasts e entrevistas em vídeo/áudio: /midia
+const podcasts = defineCollection({
+    loader: glob({ pattern: '**/*.{md,yaml,yml}', base: './src/content/podcasts' }),
+    schema: z.object({
+        title: z.string(),
+        show: z.string(),
+        date: z.coerce.date(),
+        url: z.string().url(),
+        description: z.string().optional(),
+        draft: z.boolean().default(false)
+    })
+});
+
+// Imprensa (matérias, entrevistas, citações): /midia
+const imprensa = defineCollection({
+    loader: glob({ pattern: '**/*.{md,yaml,yml}', base: './src/content/imprensa' }),
+    schema: z.object({
+        title: z.string(),
+        outlet: z.string(),
+        date: z.coerce.date(),
+        url: z.string().url(),
+        kind: z.enum(['Entrevista', 'Matéria', 'Artigo', 'Citação', 'TV', 'Rádio']).default('Matéria'),
+        draft: z.boolean().default(false)
+    })
+});
+
+export const collections = { blog, pages, projects, cases, podcasts, imprensa };

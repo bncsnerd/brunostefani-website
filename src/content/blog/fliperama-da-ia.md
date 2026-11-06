@@ -3,6 +3,7 @@ title: 'Fliperama da IA: gastar não é o problema. Gastar sem aprender é.'
 excerpt: Quase todo mundo está jogando. Quase ninguém está contando os pontos.
 publishDate: 2026-11-04
 isFeatured: true
+draft: true
 tags:
   - IA e resultado
 ---

@@ -3,6 +3,7 @@ title: Por que a empresa que não orquestra vira fornecedora de quem orquestra
 excerpt: O que estudo no doutorado com Silvio Meira, e três sinais de que a sua empresa está virando fornecedora.
 publishDate: 2026-10-28
 isFeatured: false
+draft: true
 tags:
   - Modelo de negócio
   - Ecossistemas

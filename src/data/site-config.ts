@@ -22,7 +22,10 @@ const siteConfig: SiteConfig = {
     headerNavLinks: [
         { text: 'Início', href: '/' },
         { text: 'Palestras', href: '/palestras' },
+        { text: 'Projetos', href: '/projetos', requires: 'cases' },
+        { text: 'Clientes', href: '/clientes' },
         { text: 'Ideias', href: '/ideias' },
+        { text: 'Mídia', href: '/midia' },
         { text: 'Sobre', href: '/sobre' },
         { text: 'Contato', href: '/contato' }
     ],
@@ -53,6 +56,19 @@ const siteConfig: SiteConfig = {
             href: 'https://ckgsbknowledge.com.br/a-china-entra-na-cupula-com-trump-sem-precisar-fazer-acordo-e-isso-muda-tudo-para-o-brasil/'
         }
     ],
+    clientsPage: {
+        headline: '64 empresas confiaram no meu trabalho nos últimos três anos.',
+        description: 'Empresas atendidas por Bruno Stefani em palestras, aulas, consultoria e conselho.',
+        stats: [
+            { label: 'Palestras', value: '37' },
+            { label: 'Aulas', value: '15' },
+            { label: 'Consultoria', value: '9' },
+            { label: 'Conselho', value: '3' }
+        ],
+        statsNote: 'Empresas atendidas de outubro de 2023 a outubro de 2026.',
+        // Ajuste aqui o nome exibido de cada logo (chave = nome do arquivo sem extensão).
+        logoNames: {}
+    },
     clients: ['Petrobras', 'ArcelorMittal', 'BASF', 'Bayer', 'Unilever'],
     services: [
         {

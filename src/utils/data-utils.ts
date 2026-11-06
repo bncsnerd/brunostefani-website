@@ -23,3 +23,8 @@ export function getPostsByTag(posts: CollectionEntry<'blog'>[], tagId: string) {
     const filteredPosts: CollectionEntry<'blog'>[] = posts.filter((post) => (post.data.tags || []).map((tag) => slugify(tag)).includes(tagId));
     return filteredPosts;
 }
+
+/** Rascunhos (`draft: true`) aparecem só no `npm run dev`, nunca no site publicado. */
+export function isPublished({ data }: { data: { draft?: boolean } }) {
+    return import.meta.env.DEV || !data.draft;
+}

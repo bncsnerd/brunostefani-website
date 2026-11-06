@@ -3,6 +3,7 @@ title: Três perguntas sobre IA para levar à próxima reunião de diretoria
 excerpt: A conversa que mais falta nas diretorias não é sobre tecnologia. É sobre estas três perguntas.
 publishDate: 2026-11-02
 isFeatured: true
+draft: true
 tags:
   - IA e resultado
 ---

@@ -1,11 +1,12 @@
 ---
+import { isPublished } from '../../utils/data-utils';
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import Button from '../../components/Button.astro';
 import ProjectPreview from '../../components/ProjectPreview.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-    const projects = (await getCollection('projects')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+    const projects = (await getCollection('projects', isPublished)).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
     const projectCount = projects.length;
     return projects.map((project, index) => ({
         params: { id: project.id },

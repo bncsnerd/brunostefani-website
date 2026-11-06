@@ -3,7 +3,16 @@ import NavLink from './NavLink.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import siteConfig from '../data/site-config';
 
-const navLinks = siteConfig.headerNavLinks ?? [];
+import { getCollection } from 'astro:content';
+import { isPublished } from '../utils/data-utils';
+
+const allLinks = siteConfig.headerNavLinks ?? [];
+const counts = {
+    cases: (await getCollection('cases', isPublished)).length,
+    podcasts: (await getCollection('podcasts', isPublished)).length,
+    imprensa: (await getCollection('imprensa', isPublished)).length
+};
+const navLinks = allLinks.filter((link) => !link.requires || counts[link.requires] > 0);
 ---
 
 <nav class="relative min-h-10 pt-4 pb-12 sm:min-h-14 sm:pb-24 md:pt-8" aria-label="Navegação principal">

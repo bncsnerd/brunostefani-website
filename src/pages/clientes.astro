@@ -1,0 +1,61 @@
+---
+import Button from '../components/Button.astro';
+import siteConfig from '../data/site-config';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Logos: coloque arquivos em src/assets/clientes/ (de preferência .svg ou .png com fundo transparente).
+// O nome do arquivo vira o nome da empresa: "arcelormittal.svg" -> "arcelormittal". Use o campo `logoNames` para ajustar.
+const logoFiles = import.meta.glob<{ default: ImageMetadata }>('../assets/clientes/*.{svg,png,jpg,jpeg,webp}', { eager: true });
+const logos = Object.entries(logoFiles)
+    .map(([path, mod]) => {
+        const file = path.split('/').pop() ?? '';
+        const key = file.replace(/\.[^.]+$/, '');
+        return { src: mod.default, name: siteConfig.clientsPage?.logoNames?.[key] ?? key };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+
+const page = siteConfig.clientsPage;
+const names = siteConfig.clients ?? [];
+---
+
+<BaseLayout title="Clientes" description={page?.description ?? 'Empresas que trabalharam com Bruno Stefani.'} showHeader={false}>
+    <h1 class="mb-6 font-serif text-2xl leading-tight italic sm:text-4xl">Clientes</h1>
+
+    {page?.headline && <p class="mb-10 font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">{page.headline}</p>}
+
+    {page?.stats && page.stats.length > 0 && (
+        <section aria-label="Números" class="border-main mb-16 border-y border-dashed py-6 sm:mb-24">
+            <dl class="grid grid-cols-2 gap-6 sm:grid-cols-4">
+                {page.stats.map((stat) => (
+                    <div>
+                        <dt class="text-sm">{stat.label}</dt>
+                        <dd class="font-serif text-4xl tabular-nums sm:text-5xl">{stat.value}</dd>
+                    </div>
+                ))}
+            </dl>
+            {page.statsNote && <p class="mt-4 text-xs opacity-80">{page.statsNote}</p>}
+        </section>
+    )}
+
+    {logos.length > 0 ? (
+        <section aria-labelledby="logos" class="mb-16 sm:mb-24">
+            <h2 id="logos" class="mb-10 font-serif text-xl italic sm:text-2xl">Empresas atendidas</h2>
+            <ul class="grid grid-cols-2 items-center gap-x-8 gap-y-10 sm:grid-cols-4">
+                {logos.map((logo) => (
+                    <li class="flex h-14 items-center justify-center">
+                        <img src={logo.src.src} alt={logo.name} class="max-h-14 w-auto max-w-full object-contain grayscale dark:invert" loading="lazy" />
+                    </li>
+                ))}
+            </ul>
+        </section>
+    ) : (
+        names.length > 0 && (
+            <section aria-labelledby="nomes" class="mb-16 sm:mb-24">
+                <h2 id="nomes" class="mb-6 font-serif text-xl italic sm:text-2xl">Algumas empresas atendidas</h2>
+                <p class="font-serif text-2xl leading-snug sm:text-3xl">{names.join(' · ')}</p>
+            </section>
+        )
+    )}
+
+    <Button href="/contato">Conversar sobre a sua empresa</Button>
+</BaseLayout>

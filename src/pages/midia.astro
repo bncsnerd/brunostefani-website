@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import ArrowRight from '../assets/icons/arrow-right.svg';
+import FormattedDate from '../components/FormattedDate.astro';
+import siteConfig from '../data/site-config';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { isPublished } from '../utils/data-utils';
+
+const byDateDesc = (a: { data: { date: Date } }, b: { data: { date: Date } }) => b.data.date.getTime() - a.data.date.getTime();
+const podcasts = (await getCollection('podcasts', isPublished)).sort(byDateDesc);
+const press = (await getCollection('imprensa', isPublished)).sort(byDateDesc);
+const columns = siteConfig.columns ?? [];
+---
+
+<BaseLayout
+    title="Mídia"
+    description="Podcasts, entrevistas, colunas e matérias com Bruno Stefani sobre IA, inovação, modelo de negócio e China."
+    showHeader={false}
+>
+    <h1 class="mb-12 font-serif text-2xl leading-tight italic sm:mb-16 sm:text-4xl">Mídia</h1>
+
+    {podcasts.length > 0 && (
+        <section class="mb-16 sm:mb-24" aria-labelledby="podcasts">
+            <h2 id="podcasts" class="mb-12 font-serif text-xl italic sm:mb-16 sm:text-2xl">Podcasts</h2>
+            {podcasts.map((item) => (
+                <a class="group mb-10 flex items-start justify-between gap-8 sm:mb-12" href={item.data.url} target="_blank" rel="noopener noreferrer">
+                    <div class="grow">
+                        <h3 class="font-serif text-xl leading-tight font-medium group-hover:underline group-hover:decoration-dashed group-hover:decoration-1 group-hover:underline-offset-4 sm:text-2xl">
+                            {item.data.title}
+                        </h3>
+                        <div class="mt-1 text-sm leading-normal">
+                            {item.data.show} · <FormattedDate date={item.data.date} />
+                        </div>
+                        {item.data.description && <div class="mt-3 text-sm leading-normal">{item.data.description}</div>}
+                    </div>
+                    <div class="hidden font-serif italic opacity-0 transition group-hover:opacity-100 sm:inline-flex sm:shrink-0 sm:items-center sm:gap-1">
+                        Ouvir <ArrowRight class="h-4 w-4 fill-current" />
+                    </div>
+                </a>
+            ))}
+        </section>
+    )}
+
+    {columns.length > 0 && (
+        <section class="mb-16 sm:mb-24" aria-labelledby="colunas">
+            <h2 id="colunas" class="mb-8 font-serif text-xl italic sm:text-2xl">Colunas</h2>
+            <ul class="flex flex-col gap-4">
+                {columns.map((column) => (
+                    <li>
+                        <a
+                            class="font-serif text-xl underline decoration-dashed decoration-1 underline-offset-4 hover:decoration-solid sm:text-2xl"
+                            href={column.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {column.text}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </section>
+    )}
+
+    {press.length > 0 && (
+        <section class="mb-16 sm:mb-24" aria-labelledby="imprensa">
+            <h2 id="imprensa" class="mb-12 font-serif text-xl italic sm:mb-16 sm:text-2xl">Imprensa</h2>
+            {press.map((item) => (
+                <a class="group mb-10 flex items-start justify-between gap-8 sm:mb-12" href={item.data.url} target="_blank" rel="noopener noreferrer">
+                    <div class="grow">
+                        <h3 class="font-serif text-xl leading-tight font-medium group-hover:underline group-hover:decoration-dashed group-hover:decoration-1 group-hover:underline-offset-4 sm:text-2xl">
+                            {item.data.title}
+                        </h3>
+                        <div class="mt-1 text-sm leading-normal">
+                            {item.data.outlet} · {item.data.kind} · <FormattedDate date={item.data.date} />
+                        </div>
+                    </div>
+                    <div class="hidden font-serif italic opacity-0 transition group-hover:opacity-100 sm:inline-flex sm:shrink-0 sm:items-center sm:gap-1">
+                        Ler <ArrowRight class="h-4 w-4 fill-current" />
+                    </div>
+                </a>
+            ))}
+        </section>
+    )}
+
+    <p class="text-sm">
+        Jornalistas e produtores: <a class="underline decoration-dashed underline-offset-2" href="/contato">entre em contato</a> para entrevistas e participações.
+    </p>
+</BaseLayout>

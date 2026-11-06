@@ -7,6 +7,8 @@ export type ImageInput = {
 export type Link = {
     text: string;
     href: string;
+    /** Só mostra o link quando essa coleção tem ao menos um item publicado. */
+    requires?: 'cases' | 'podcasts' | 'imprensa';
 };
 
 export type Hero = {
@@ -42,6 +44,13 @@ export type SiteConfig = {
     socialLinks?: Link[];
     hero?: Hero;
     columns?: Link[];
+    clientsPage?: {
+        headline?: string;
+        description?: string;
+        stats?: { label: string; value: string }[];
+        statsNote?: string;
+        logoNames?: Record<string, string>;
+    };
     clients?: string[];
     services?: { title: string; text: string; href: string }[];
     subscribe?: Subscribe;

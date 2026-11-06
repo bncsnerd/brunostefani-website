@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import CasePreview from '../../components/CasePreview.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { isPublished } from '../../utils/data-utils';
+
+const cases = (await getCollection('cases', isPublished)).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<BaseLayout
+    title="Projetos"
+    description="Projetos de inovação, novos negócios e IA conduzidos por Bruno Stefani, contados em detalhe: contexto, desafio, o que foi feito e resultado."
+    showHeader={false}
+>
+    <h1 class="mb-6 font-serif text-2xl leading-tight italic sm:text-4xl">Projetos</h1>
+    <p class="mb-12 max-w-2xl text-sm leading-normal sm:mb-16 sm:text-base">
+        Alguns projetos contados em detalhe: o contexto, o desafio, o que foi feito e o que voltou para o negócio.
+    </p>
+    {cases.map((item) => (
+        <CasePreview item={item} class="mb-10 sm:mb-12" />
+    ))}
+</BaseLayout>

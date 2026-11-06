@@ -1,4 +1,5 @@
 ---
+import { isPublished } from '../../utils/data-utils';
 import type { GetStaticPathsOptions, Page } from 'astro';
 import { type CollectionEntry, getCollection } from 'astro:content';
 import Pagination from '../../components/Pagination.astro';
@@ -7,7 +8,7 @@ import siteConfig from '../../data/site-config';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-    const projects = (await getCollection('projects')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+    const projects = (await getCollection('projects', isPublished)).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
     return paginate(projects, { pageSize: siteConfig.projectsPerPage || 6 });
 }
 

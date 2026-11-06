@@ -4,17 +4,21 @@ import ArrowRight from '../assets/icons/arrow-right.svg';
 import Button from '../components/Button.astro';
 import Hero from '../components/Hero.astro';
 import PostPreview from '../components/PostPreview.astro';
+import CasePreview from '../components/CasePreview.astro';
 import ProjectPreview from '../components/ProjectPreview.astro';
 import Subscribe from '../components/Subscribe.astro';
 import siteConfig from '../data/site-config';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { sortItemsByDateDesc } from '../utils/data-utils';
+import { sortItemsByDateDesc, isPublished } from '../utils/data-utils';
 
-const posts = (await getCollection('blog')).sort(sortItemsByDateDesc);
+const posts = (await getCollection('blog', isPublished)).sort(sortItemsByDateDesc);
 const featuredPosts = posts.filter(({ data }) => data.isFeatured);
 
-const projects = (await getCollection('projects')).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const projects = (await getCollection('projects', isPublished)).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
 const featuredProjects = projects.filter(({ data }) => data.isFeatured);
+
+const cases = (await getCollection('cases', isPublished)).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const featuredCases = cases.filter(({ data }) => data.isFeatured);
 
 const services = siteConfig.services ?? [];
 const clients = siteConfig.clients ?? [];
@@ -28,6 +32,9 @@ const columns = siteConfig.columns ?? [];
         <section class="border-main mb-16 border-y border-dashed py-6 sm:mb-24" aria-labelledby="clientes">
             <h2 id="clientes" class="mb-2 text-sm">Já trabalhou com</h2>
             <p class="font-serif text-xl leading-snug sm:text-2xl">{clients.join(' · ')}</p>
+            <a class="mt-3 inline-block text-sm underline decoration-dashed underline-offset-2 hover:decoration-solid" href="/clientes">
+                Ver todos os clientes
+            </a>
         </section>
     )}
 
@@ -58,6 +65,18 @@ const columns = siteConfig.columns ?? [];
             ))}
             <div class="mt-12 sm:mt-16">
                 <Button href="/palestras">Ver todas as palestras</Button>
+            </div>
+        </section>
+    )}
+
+    {featuredCases.length > 0 && (
+        <section class="mb-16 sm:mb-24" aria-labelledby="projetos">
+            <h2 id="projetos" class="mb-12 font-serif text-xl italic sm:mb-16 sm:text-2xl">Projetos</h2>
+            {featuredCases.map((item) => (
+                <CasePreview item={item} class="mb-10 sm:mb-12" headingLevel="h3" />
+            ))}
+            <div class="mt-12 sm:mt-16">
+                <Button href="/projetos">Ver todos os projetos</Button>
             </div>
         </section>
     )}

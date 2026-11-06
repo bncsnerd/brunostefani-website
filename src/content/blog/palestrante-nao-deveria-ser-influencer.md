@@ -2,7 +2,7 @@
 title: Palestrante não deveria ser influencer
 excerpt: Influencer vive de alcance. Palestrante deveria viver de prática.
 publishDate: 2026-10-20
-isFeatured: false
+isFeatured: true
 tags:
   - Liderança
 ---

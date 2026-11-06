@@ -1,0 +1,60 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import Button from '../../components/Button.astro';
+import CasePreview from '../../components/CasePreview.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { isPublished } from '../../utils/data-utils';
+
+export async function getStaticPaths() {
+    const cases = (await getCollection('cases', isPublished)).sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+    return cases.map((item) => ({
+        params: { id: item.id },
+        props: { item, others: cases.filter((other) => other.id !== item.id).slice(0, 2) }
+    }));
+}
+
+type Props = { item: CollectionEntry<'cases'>; others: CollectionEntry<'cases'>[] };
+
+const { item, others } = Astro.props;
+const { title, client, sector, period, summary, seo } = item.data;
+const { Content } = await render(item);
+---
+
+<BaseLayout title={seo?.title ?? title} description={seo?.description ?? summary} image={seo?.image} pageType="article" showHeader={false}>
+    <article class="mb-16 sm:mb-24">
+        <header class="mb-8">
+            <h1 class="font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">{title}</h1>
+            <dl class="border-main mt-6 grid grid-cols-1 gap-x-8 gap-y-3 border-y border-dashed py-4 text-sm sm:grid-cols-3">
+                <div>
+                    <dt class="opacity-80">Cliente</dt>
+                    <dd class="font-serif text-lg">{client}</dd>
+                </div>
+                {sector && (
+                    <div>
+                        <dt class="opacity-80">Setor</dt>
+                        <dd class="font-serif text-lg">{sector}</dd>
+                    </div>
+                )}
+                <div>
+                    <dt class="opacity-80">Período</dt>
+                    <dd class="font-serif text-lg">{period}</dd>
+                </div>
+            </dl>
+            <p class="mt-6 font-serif text-xl leading-snug italic sm:text-2xl">{summary}</p>
+        </header>
+        <div class="prose sm:prose-lg max-w-none">
+            <Content />
+        </div>
+        <div class="mt-8 sm:mt-12">
+            <Button href="/contato">Conversar sobre um projeto assim</Button>
+        </div>
+    </article>
+    {others.length > 0 && (
+        <div class="my-16 sm:my-24">
+            <h2 class="mb-12 font-serif text-xl italic sm:mb-16 sm:text-2xl">Outros projetos</h2>
+            {others.map((other) => (
+                <CasePreview item={other} class="mb-10 sm:mb-12" headingLevel="h3" />
+            ))}
+        </div>
+    )}
+</BaseLayout>
