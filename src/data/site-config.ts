@@ -1,88 +1,63 @@
-import avatar from '../assets/images/avatar.jpg';
-import hero from '../assets/images/hero.jpg';
 import type { SiteConfig } from '../types';
 
 const siteConfig: SiteConfig = {
-    website: 'https://example.com',
-    avatar: {
-        src: avatar,
-        alt: 'Ethan Donovan'
-    },
-    title: 'Dante',
-    subtitle: 'Minimal Astro.js theme',
-    description: 'Astro.js and Tailwind CSS theme for blog and portfolio by justgoodui.com',
+    website: 'https://brunostefani.com',
+    title: 'Bruno Stefani',
+    subtitle: 'IA, inovação e novos negócios para empresas tradicionais',
+    description:
+        'Bruno Stefani ajuda empresas tradicionais a transformar IA e inovação em modelo de negócio e resultado. Palestras, conselho e educação executiva.',
     image: {
-        src: '/dante-preview.jpg',
-        alt: 'Dante - Astro.js and Tailwind CSS theme'
+        src: '/og-image.png',
+        alt: 'Bruno Stefani: do piloto ao P&L'
     },
     headerNavLinks: [
-        {
-            text: 'Home',
-            href: '/'
-        },
-        {
-            text: 'Projects',
-            href: '/projects'
-        },
-        {
-            text: 'Blog',
-            href: '/blog'
-        },
-        {
-            text: 'Tags',
-            href: '/tags'
-        }
+        { text: 'Início', href: '/' },
+        { text: 'Palestras', href: '/palestras' },
+        { text: 'Ideias', href: '/ideias' },
+        { text: 'Sobre', href: '/sobre' },
+        { text: 'Contato', href: '/contato' }
     ],
     footerNavLinks: [
-        {
-            text: 'About',
-            href: '/about'
-        },
-        {
-            text: 'Contact',
-            href: '/contact'
-        },
-        {
-            text: 'Terms',
-            href: '/terms'
-        },
-        {
-            text: 'Download theme',
-            href: 'https://github.com/JustGoodUI/dante-astro-theme'
-        }
+        { text: 'Sobre', href: '/sobre' },
+        { text: 'Contato', href: '/contato' },
+        { text: 'Temas', href: '/temas' },
+        { text: 'RSS', href: '/rss.xml' }
     ],
     socialLinks: [
-        {
-            text: 'Dribbble',
-            href: 'https://dribbble.com/'
-        },
-        {
-            text: 'Instagram',
-            href: 'https://instagram.com/'
-        },
-        {
-            text: 'X/Twitter',
-            href: 'https://twitter.com/'
-        }
+        { text: 'LinkedIn', href: 'https://linkedin.com/in/brunonstefani' },
+        { text: 'X', href: 'https://x.com/nerdstefani' }
     ],
     hero: {
-        title: 'Hi There & Welcome to My Corner of the Web!',
-        text: "I'm **Ethan Donovan**, a web developer at Amazing Studio, dedicated to the realms of collaboration and artificial intelligence.\nMy approach involves embracing intuition, conducting just enough research, and leveraging aesthetics as a catalyst for exceptional products.\nI have a profound appreciation for top-notch software, visual design, and the principles of product-led growth.\n\nFeel free to explore some of my coding endeavors on [GitHub](https://github.com/JustGoodUI/dante-astro-theme) or follow me on [Twitter/X](https://twitter.com/justgoodui).",
-        image: {
-            src: hero,
-            alt: 'A person sitting at a desk in front of a computer'
-        },
+        title: 'Do piloto ao P&L.',
+        text: 'Eu ajudo empresas tradicionais a transformar **IA e inovação em modelo de negócio e resultado**. Não em piloto e palco.\n\nFui Diretor Global de Inovação da Ambev. Hoje sou professor na Fundação Dom Cabral, no Insper e na FGV, conselheiro de empresas e colunista da MIT Sloan Management Review Brasil. Faço doutorado com Silvio Meira sobre orquestração de ecossistemas de negócios.',
         actions: [
-            {
-                text: 'Get in Touch',
-                href: '/contact'
-            }
+            { text: 'Contratar palestra', href: '/contato' },
+            { text: 'Ler as ideias', href: '/ideias' }
         ]
     },
+    clients: ['Petrobras', 'ArcelorMittal', 'BASF', 'Bayer', 'Unilever'],
+    services: [
+        {
+            title: 'Palestras e workshops',
+            text: 'Para convenções, diretorias e lideranças que precisam sair da sala com algo para usar na segunda-feira.',
+            href: '/palestras'
+        },
+        {
+            title: 'Conselho e advisory',
+            text: 'Conselheiro (IBGC) de empresas que querem inovação prática no negócio e uma relação mais próxima com o ecossistema de tecnologia e startups.',
+            href: '/sobre'
+        },
+        {
+            title: 'Educação executiva',
+            text: 'Programas para diretorias e lideranças na FDC, no Insper, na FGV e in company pela NERD Business School.',
+            href: '/contato'
+        }
+    ],
     subscribe: {
-        enabled: true,
-        title: 'Subscribe to Dante Newsletter',
-        text: 'One update per week. All the latest posts directly in your inbox.',
+        // Ative quando a newsletter existir: troque `action` pela URL do formulário (Substack, Beehiiv, Mailchimp...).
+        enabled: false,
+        title: 'Uma ideia por semana. Cabe numa reunião de diretoria.',
+        text: 'Casos, números com fonte e perguntas para levar na segunda-feira. Sem hype.',
         form: {
             action: '#'
         }
